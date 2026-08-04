@@ -1,9 +1,9 @@
 ---
 name: Epic
 about: Track a major feature, milestone, or curriculum phase
-title: "EPIC: "
-labels: ["epic"]
-assignees: []
+title: "[EPIC]: "
+labels: epic
+assignees: ""
 ---
 
 # Epic
