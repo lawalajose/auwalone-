@@ -5,22 +5,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	m "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
-type rawShipment struct {
-	ShipmentID           string
-	OriginRegion         string
-	DestinationRegion    string
-	ShipmentDate         string
-	ExpectedDeliveryDate string
-	ActualDeliveryDate   string
-	ShipmentStatus       string
-	Carrier              string
-}
+func ParserFxn(filePath string) ([]m.RawShipment, error) {
 
-func ParserFxn() ([]rawShipment, error) {
-
-	file, err := os.Open("shipments_2000.csv")
+	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, fmt.Errorf("open shipments file: %w", err)
 	}
@@ -34,7 +25,7 @@ func ParserFxn() ([]rawShipment, error) {
 		return nil, fmt.Errorf("read CSV header: %w", err)
 	}
 
-	var shipments []rawShipment
+	var shipments []m.RawShipment
 
 	for {
 		record, err := reader.Read()
@@ -54,7 +45,7 @@ func ParserFxn() ([]rawShipment, error) {
 			)
 		}
 
-		shipment := rawShipment{
+		shipment := m.RawShipment{
 			ShipmentID:           record[0],
 			OriginRegion:         record[1],
 			DestinationRegion:    record[2],

@@ -1,0 +1,41 @@
+Shipment Report
+──────────────────────────────────────────────────────────────────────
+Generated: 2026-08-13 09:10
+Input: shipments.csv
+
+SUMMARY
+──────────────────────────────────────────────────────────────────────
+Total rows             12,450
+Valid shipments        12,218
+Invalid rows               232
+Validation rate          98.1%
+
+ON-TIME PERFORMANCE
+──────────────────────────────────────────────────────────────────────
+On-time shipments       11,237
+Late shipments              981
+On-time rate              92.0%
+
+DELIVERY PERFORMANCE BY REGION
+──────────────────────────────────────────────────────────────────────
+Region             Shipments    On-time %    Avg Delivery
+──────────────────────────────────────────────────────────────────────
+North                  3,102        94.8%       2.4 days
+South                  3,844        91.2%       3.1 days
+East                   2,731        89.7%       3.5 days
+West                   2,541        93.1%       2.8 days
+──────────────────────────────────────────────────────────────────────
+Overall               12,218        92.0%       2.9 days
+
+DATA QUALITY
+──────────────────────────────────────────────────────────────────────
+Missing shipment IDs              18
+Invalid dates                     37
+Missing regions                   52
+Invalid delivery times            81
+Duplicate shipment IDs            44
+
+STATUS
+──────────────────────────────────────────────────────────────────────
+✓ Report generated successfully
+⚠ 232 rows excluded from shipment statistics

@@ -4,19 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	p "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/parser"
+	m "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
-
-type CleanedShipment struct {
-	ShipmentID           string
-	OriginRegion         string
-	DestinationRegion    string
-	ShipmentDate         time.Time
-	ExpectedDeliveryDate time.Time
-	ActualDeliveryDate   time.Time // use IsZero() to check if missing
-	ShipmentStatus       string
-	Carrier              string
-}
 
 var validRegion = map[string]bool{
 	"East":    true,
@@ -39,28 +28,16 @@ var validStatus = map[string]bool{
 	"Cancelled":  true,
 }
 
-type validationError struct {
-	Row     int
-	Column  string
-	Value   string
-	Message string
-}
+func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationError) {
 
-func Validator() error {
+	var errors []m.ValidationError
 
-	var errors []validationError
-
-	var clean_shipment []CleanedShipment
-
-	rawData, err := p.ParserFxn()
-	if err != nil {
-		return fmt.Errorf("Unable to Parse data: %w", err)
-	}
+	var clean_shipment []m.CleanedShipment
 
 	for i, data := range rawData {
 
 		if !validShipmentID(data.ShipmentID) {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "ShipmentID",
 				Value:   data.ShipmentID,
@@ -71,7 +48,7 @@ func Validator() error {
 		}
 
 		if !validRegionn(data.OriginRegion) {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Origin Region",
 				Value:   data.OriginRegion,
@@ -83,7 +60,7 @@ func Validator() error {
 		}
 
 		if !validRegionn(data.DestinationRegion) {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Destination Region",
 				Value:   data.DestinationRegion,
@@ -96,7 +73,7 @@ func Validator() error {
 
 		shipment_date, isDate := validDate(data.ShipmentDate)
 		if !isDate {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Shipment Date",
 				Value:   data.ShipmentDate,
@@ -108,7 +85,7 @@ func Validator() error {
 
 		expDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Expected Delivery Date",
 				Value:   data.ExpectedDeliveryDate,
@@ -120,7 +97,7 @@ func Validator() error {
 
 		actDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Actual Delivery Date",
 				Value:   data.ActualDeliveryDate,
@@ -131,7 +108,7 @@ func Validator() error {
 		}
 
 		if !validStatus[data.ShipmentStatus] {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Shipment Status",
 				Value:   data.ShipmentStatus,
@@ -143,7 +120,7 @@ func Validator() error {
 		}
 
 		if !validCarriers[data.Carrier] {
-			errr := validationError{
+			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Carrier",
 				Value:   data.ShipmentStatus,
@@ -154,7 +131,7 @@ func Validator() error {
 
 		}
 
-		clnshipment := CleanedShipment{
+		clnshipment := m.CleanedShipment{
 			ShipmentID:           data.ShipmentID,
 			OriginRegion:         data.OriginRegion,
 			DestinationRegion:    data.DestinationRegion,
@@ -178,7 +155,7 @@ func Validator() error {
 
 	}
 
-	return nil
+	return clean_shipment, errors
 }
 
 func validShipmentID(id string) bool {
