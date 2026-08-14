@@ -1,7 +1,6 @@
 package validator
 
 import (
-	"fmt"
 	"time"
 
 	m "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
@@ -33,10 +32,13 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 	var errors []m.ValidationError
 
 	var clean_shipment []m.CleanedShipment
+	count := 0
 
 	for i, data := range rawData {
 
 		if !validShipmentID(data.ShipmentID) {
+			count++
+
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "ShipmentID",
@@ -48,6 +50,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		}
 
 		if !validRegionn(data.OriginRegion) {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Origin Region",
@@ -60,6 +63,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		}
 
 		if !validRegionn(data.DestinationRegion) {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Destination Region",
@@ -73,7 +77,9 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		shipment_date, isDate := validDate(data.ShipmentDate)
 		if !isDate {
+			count++
 			errr := m.ValidationError{
+
 				Row:     i + 1,
 				Column:  "Shipment Date",
 				Value:   data.ShipmentDate,
@@ -85,6 +91,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		expDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Expected Delivery Date",
@@ -97,6 +104,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		actDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Actual Delivery Date",
@@ -108,6 +116,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		}
 
 		if !validStatus[data.ShipmentStatus] {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Shipment Status",
@@ -120,6 +129,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		}
 
 		if !validCarriers[data.Carrier] {
+			count++
 			errr := m.ValidationError{
 				Row:     i + 1,
 				Column:  "Carrier",
@@ -142,16 +152,12 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 			Carrier:              data.Carrier,
 		}
 
-		if len(errors) != 0 {
+		if count != 0 {
+			count = 0
 			continue
-
 		}
 
 		clean_shipment = append(clean_shipment, clnshipment)
-
-	}
-	for _, e := range errors {
-		fmt.Println(e.Value)
 
 	}
 
