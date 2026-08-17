@@ -1,8 +1,9 @@
 package aggregate
 
 import (
-	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 	"time"
+
+	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
 func Aggregator(cleanData []model.CleanedShipment, errors []model.ShipmentErrorReport, file string, rawaData []model.RawShipment) model.ReportFormat {
@@ -51,5 +52,32 @@ func onTimePerformance(cleanData []model.CleanedShipment) (int, int, float64, fl
 	averageDeliveryDays := float64(totalDays) / float64(delivered)
 	rate := (float64(onTime) / float64(delivered)) * 100
 	return onTime, (delivered - onTime), rate, averageDeliveryDays
+
+}
+
+func performaceByRegion(cleanData []model.CleanedShipment, region string) (int, int, float64, float64) {
+
+	var delivered, onTime, totalDays int
+
+	for _, data := range cleanData {
+
+		if data.ShipmentStatus != "Delivered" && data.DestinationRegion != region {
+			continue
+		}
+
+		delivered++
+		if !data.ActualDeliveryDate.After(data.ExpectedDeliveryDate) {
+			onTime++
+
+		}
+
+		days := int(data.ActualDeliveryDate.Sub(data.ShipmentDate).Hours() / 24)
+		totalDays += days
+
+	}
+
+	averageDeliveryDays := float64(totalDays) / float64(delivered)
+	rate := (float64(onTime) / float64(delivered)) * 100
+	return onTime, delivered, rate, averageDeliveryDays
 
 }

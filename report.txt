@@ -1,14 +1,14 @@
 RawShipment Report
 ──────────────────────────────────────────────────────────────────────
-Generated                2026-08-16T17:02:42Z
+Generated                2026-08-17T11:05:19Z
 Input                    shipments_2000.csv
 
 SUMMARY
 ──────────────────────────────────────────────────────────────────────
 Total rows               2000
-Valid shipments          1407
-Invalid rows             593
-Validation rate          70.3%
+Valid shipments          1996
+Invalid rows             4
+Validation rate          99.8%
 
 ON-TIME PERFORMANCE
 ──────────────────────────────────────────────────────────────────────
@@ -17,5 +17,77 @@ Late shipments           737
 On-time rate             47.6%
 Average delivery days    6.2
 
+DELIVERY PERFORMANCE BY REGION
+──────────────────────────────────────────────────────────────────────
+Region             Shipments    On-time %    Avg Delivery
+──────────────────────────────────────────────────────────────────────
+
+
+
+
 SHIPMENT VALIDATION ERROR REPORT
-================================
+======================================================================
+
+Row 50
+----------------------------------------
+Shipment ID:             
+Origin Region:           West
+Destination Region:      South
+Shipment Date:           2026-03-26
+Expected Delivery Date:  2026-04-01
+Actual Delivery Date:    2026-04-03
+Shipment Status:         Delivered
+Carrier:                 UPS
+
+Errors:
+- ShipmentID: Invalid shipment ID
+
+
+
+Row 150
+----------------------------------------
+Shipment ID:             SHP00150
+Origin Region:           Central
+Destination Region:      West
+Shipment Date:           invalid-date
+Expected Delivery Date:  2026-01-10
+Actual Delivery Date:    2026-01-12
+Shipment Status:         Delivered
+Carrier:                 FedEx
+
+Errors:
+- Shipment Date: Invalid Date Format, expected YYYY-MM-DD format
+
+
+
+Row 200
+----------------------------------------
+Shipment ID:             SHP00200
+Origin Region:           West
+Destination Region:      Central
+Shipment Date:           2026-01-08
+Expected Delivery Date:  2026-01-15
+Actual Delivery Date:    2026-01-13
+Shipment Status:         Completed
+Carrier:                 FedEx
+
+Errors:
+- Shipment Status: Invalid Shipment Staus, expected (Delivered, In Transit, Delayed, Cancelled)
+
+
+
+Row 250
+----------------------------------------
+Shipment ID:             SHP00250
+Origin Region:           
+Destination Region:      East
+Shipment Date:           2026-03-26
+Expected Delivery Date:  2026-03-30
+Actual Delivery Date:    
+Shipment Status:         Delayed
+Carrier:                 DHL
+
+Errors:
+- Origin Region: Invalid Origin Region, Expected (East, West, South, Central, North)
+
+

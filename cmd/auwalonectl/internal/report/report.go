@@ -52,14 +52,18 @@ func writeTextReport(r model.ReportFormat) error {
 	fmt.Fprintf(&b, "%-24s %.1f\n", "Average delivery days", r.AverageDeliveryDays)
 
 	b.WriteString("\n")
+	b.WriteString("DELIVERY PERFORMANCE BY REGION\n")
+	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
+	b.WriteString("Region             Shipments    On-time %    Avg Delivery\n")
+	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
+
+	b.WriteString("\n\n\n\n")
 	b.WriteString("SHIPMENT VALIDATION ERROR REPORT\n")
-	b.WriteString("================================\n")
+	b.WriteString("======================================================================\n")
 
 	if len(r.ShipmentError) == 0 {
-		fmt.Println("no error")
 		b.WriteString("No validation errors found.\n")
 	} else {
-		fmt.Println("error")
 		for _, report := range r.ShipmentError {
 			writeShipmentError(&b, report)
 		}
@@ -80,6 +84,7 @@ func writeShipmentError(b *strings.Builder, report model.ShipmentErrorReport) {
 	s := report.RawShipment
 
 	fmt.Fprintf(b, "\nRow %d\n", report.Errors[0].Row)
+	b.WriteString("----------------------------------------\n")
 	fmt.Fprintf(b, "Shipment ID:             %s\n", s.ShipmentID)
 	fmt.Fprintf(b, "Origin Region:           %s\n", s.OriginRegion)
 	fmt.Fprintf(b, "Destination Region:      %s\n", s.DestinationRegion)
@@ -93,6 +98,7 @@ func writeShipmentError(b *strings.Builder, report model.ShipmentErrorReport) {
 
 	for _, err := range report.Errors {
 		fmt.Fprintf(b, "- %s: %s\n", err.Column, err.Message)
+		b.WriteString("\n\n")
 	}
 }
 

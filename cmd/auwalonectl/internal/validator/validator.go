@@ -84,7 +84,7 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 				Row:     i + 1,
 				Column:  "Shipment Date",
 				Value:   data.ShipmentDate,
-				Message: "Invalid Date Format, expected 2006-01-02 format",
+				Message: "Invalid Date Format, expected YYYY-MM-DD format",
 			}
 
 			errors = append(errors, errr)
@@ -97,20 +97,21 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 				Row:     i + 1,
 				Column:  "Expected Delivery Date",
 				Value:   data.ExpectedDeliveryDate,
-				Message: "Invalid Date Format, expected 2006-01-02 format",
+				Message: "Invalid Date Format, expected YYYY-MM-DD format",
 			}
 
 			errors = append(errors, errr)
 		}
 
-		actDelivery_date, isDate := validDate(data.ActualDeliveryDate)
+		actDelivery_date, isDate := validDateActualDeliveryDate(data.ActualDeliveryDate, data.ShipmentStatus)
+
 		if !isDate {
 			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Actual Delivery Date",
 				Value:   data.ActualDeliveryDate,
-				Message: "Invalid Date Format, expected 2006-01-02 format",
+				Message: "Invalid Date Format, expected YYYY-MM-DD format",
 			}
 
 			errors = append(errors, errr)
@@ -158,11 +159,12 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 
 		if count != 0 {
 			count = 0
+			shipmentError = append(shipmentError, shipment_err)
 			continue
 		}
 
 		clean_shipment = append(clean_shipment, clnshipment)
-		shipmentError = append(shipmentError, shipment_err)
+
 	}
 
 	return clean_shipment, shipmentError
@@ -180,6 +182,20 @@ func validDate(date string) (time.Time, bool) {
 	layout := "2006-01-02"
 
 	newDate, err := time.Parse(layout, date)
+	if err != nil {
+		return newDate, false
+	}
+	return newDate, true
+}
+
+func validDateActualDeliveryDate(date string, status string) (time.Time, bool) {
+	layout := "2006-01-02"
+
+	newDate, err := time.Parse(layout, date)
+	if date == "" && status != "Delivered" {
+		return newDate, true
+	}
+
 	if err != nil {
 		return newDate, false
 	}
