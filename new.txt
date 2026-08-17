@@ -39,3 +39,40 @@ STATUS
 ──────────────────────────────────────────────────────────────────────
 ✓ Report generated successfully
 ⚠ 232 rows excluded from shipment statistics
+
+
+
+
+
+
+
+SHIPMENT VALIDATION ERROR REPORT
+================================
+
+
+type ValidationError struct {
+    Row     int
+    Column  string
+    Value   string
+    Message string
+}
+
+type ShipmentErrorReport struct {
+    Shipment Shipment
+    Errors   []ValidationError
+}
+
+
+
+Row 5
+Shipment No:         SHP001
+Customer:            ABC Ltd
+Origin:              Kano
+Destination:         Lagos
+Shipment Date:       2026-08-10
+Actual Delivery:     15/08/2026
+Status:              Delivered
+
+Errors:
+- Actual Delivery Date: Invalid date format; expected YYYY-MM-DD
+- Status: Invalid status value

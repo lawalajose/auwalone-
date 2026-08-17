@@ -6,10 +6,10 @@ import (
 	"io"
 	"os"
 
-	m "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
+	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
-func ParserFxn(filePath string) ([]m.RawShipment, error) {
+func ParserFxn(filePath string) ([]model.RawShipment, error) {
 
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -25,7 +25,7 @@ func ParserFxn(filePath string) ([]m.RawShipment, error) {
 		return nil, fmt.Errorf("read CSV header: %w", err)
 	}
 
-	var shipments []m.RawShipment
+	var shipments []model.RawShipment
 
 	for {
 		record, err := reader.Read()
@@ -45,7 +45,7 @@ func ParserFxn(filePath string) ([]m.RawShipment, error) {
 			)
 		}
 
-		shipment := m.RawShipment{
+		shipment := model.RawShipment{
 			ShipmentID:           record[0],
 			OriginRegion:         record[1],
 			DestinationRegion:    record[2],

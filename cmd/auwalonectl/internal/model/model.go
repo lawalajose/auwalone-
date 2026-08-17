@@ -29,6 +29,10 @@ type ValidationError struct {
 	Value   string
 	Message string
 }
+type ShipmentErrorReport struct {
+	RawShipment RawShipment
+	Errors      []ValidationError
+}
 
 type ReportFormat struct {
 	// Metadata
@@ -52,6 +56,9 @@ type ReportFormat struct {
 
 	// Data quality
 	DataQuality DataQuality `json:"dataQuality"`
+
+	//Error report
+	ShipmentError []ShipmentErrorReport
 }
 
 type RegionPerformance struct {

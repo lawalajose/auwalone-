@@ -1,0 +1,21 @@
+RawShipment Report
+──────────────────────────────────────────────────────────────────────
+Generated                2026-08-16T17:02:42Z
+Input                    shipments_2000.csv
+
+SUMMARY
+──────────────────────────────────────────────────────────────────────
+Total rows               2000
+Valid shipments          1407
+Invalid rows             593
+Validation rate          70.3%
+
+ON-TIME PERFORMANCE
+──────────────────────────────────────────────────────────────────────
+On-time shipments        670
+Late shipments           737
+On-time rate             47.6%
+Average delivery days    6.2
+
+SHIPMENT VALIDATION ERROR REPORT
+================================

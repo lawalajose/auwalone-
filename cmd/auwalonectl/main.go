@@ -2,31 +2,22 @@ package main
 
 import (
 	"fmt"
-	"os"
 
-	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/aggregate"
-	p "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/parser"
-	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/report"
-	v "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/validator"
+	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/parser"
+	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/validator"
 )
 
 func main() {
 
 	file := "shipments_2000.csv"
 
-	rawData, _ := p.ParserFxn(file)
+	rawData, _ := parser.ParserFxn(file)
 
-	cleanData, errr := v.Validator(rawData)
+	_, errr := validator.Validator(rawData)
+	fmt.Println(errr)
 
-	reportStruct := aggregate.Aggregator(cleanData, errr, file, len(rawData))
+	// reportStruct := aggregate.Aggregator(cleanData, errr, file, rawData)
 
-	data, err := os.Create("report.json")
+	// report.Generate(reportStruct)
 
-	if err != nil {
-		return
-	}
-	defer data.Close()
-
-	result := report.JSON(data, reportStruct)
-	fmt.Println(result)
 }

@@ -3,7 +3,7 @@ package validator
 import (
 	"time"
 
-	m "github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
+	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
 var validRegion = map[string]bool{
@@ -27,19 +27,20 @@ var validStatus = map[string]bool{
 	"Cancelled":  true,
 }
 
-func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationError) {
+func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.ShipmentErrorReport) {
 
-	var errors []m.ValidationError
+	var shipmentError []model.ShipmentErrorReport
 
-	var clean_shipment []m.CleanedShipment
+	var clean_shipment []model.CleanedShipment
 	count := 0
 
 	for i, data := range rawData {
+		var errors []model.ValidationError
 
 		if !validShipmentID(data.ShipmentID) {
 			count++
 
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "ShipmentID",
 				Value:   data.ShipmentID,
@@ -51,7 +52,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		if !validRegionn(data.OriginRegion) {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Origin Region",
 				Value:   data.OriginRegion,
@@ -64,7 +65,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		if !validRegionn(data.DestinationRegion) {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Destination Region",
 				Value:   data.DestinationRegion,
@@ -78,7 +79,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		shipment_date, isDate := validDate(data.ShipmentDate)
 		if !isDate {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 
 				Row:     i + 1,
 				Column:  "Shipment Date",
@@ -92,7 +93,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		expDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Expected Delivery Date",
 				Value:   data.ExpectedDeliveryDate,
@@ -102,10 +103,10 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 			errors = append(errors, errr)
 		}
 
-		actDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
+		actDelivery_date, isDate := validDate(data.ActualDeliveryDate)
 		if !isDate {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Actual Delivery Date",
 				Value:   data.ActualDeliveryDate,
@@ -117,7 +118,7 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		if !validStatus[data.ShipmentStatus] {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Shipment Status",
 				Value:   data.ShipmentStatus,
@@ -130,18 +131,21 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 
 		if !validCarriers[data.Carrier] {
 			count++
-			errr := m.ValidationError{
+			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Carrier",
-				Value:   data.ShipmentStatus,
+				Value:   data.Carrier,
 				Message: "Invalid Carrier, expected (UPS, FedEx, DHL)",
 			}
-
 			errors = append(errors, errr)
-
 		}
 
-		clnshipment := m.CleanedShipment{
+		shipment_err := model.ShipmentErrorReport{
+			RawShipment: data,
+			Errors:      errors,
+		}
+
+		clnshipment := model.CleanedShipment{
 			ShipmentID:           data.ShipmentID,
 			OriginRegion:         data.OriginRegion,
 			DestinationRegion:    data.DestinationRegion,
@@ -158,10 +162,10 @@ func Validator(rawData []m.RawShipment) ([]m.CleanedShipment, []m.ValidationErro
 		}
 
 		clean_shipment = append(clean_shipment, clnshipment)
-
+		shipmentError = append(shipmentError, shipment_err)
 	}
 
-	return clean_shipment, errors
+	return clean_shipment, shipmentError
 }
 
 func validShipmentID(id string) bool {
@@ -180,5 +184,4 @@ func validDate(date string) (time.Time, bool) {
 		return newDate, false
 	}
 	return newDate, true
-
 }
