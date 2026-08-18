@@ -23,6 +23,27 @@ type CleanedShipment struct {
 	Carrier              string
 }
 
+var ValidRegion = map[string]bool{
+	"East":    true,
+	"West":    true,
+	"South":   true,
+	"Central": true,
+	"North":   true,
+}
+
+var ValidCarriers = map[string]bool{
+	"UPS":   true,
+	"FedEx": true,
+	"DHL":   true,
+}
+
+var ValidStatus = map[string]bool{
+	"Delivered":  true,
+	"In Transit": true,
+	"Delayed":    true,
+	"Cancelled":  true,
+}
+
 type ValidationError struct {
 	Row     int
 	Column  string
@@ -53,12 +74,19 @@ type ReportFormat struct {
 
 	// Regional performance
 	Regions []RegionPerformance `json:"regions"`
+	Overall OverAllPerformance  `json:"overall"`
 
 	// Data quality
 	DataQuality DataQuality `json:"dataQuality"`
 
 	//Error report
 	ShipmentError []ShipmentErrorReport
+}
+
+type OverAllPerformance struct {
+	OverAllShipments           int     `json:"shipments"`
+	OverAllOnTimePercentage    float64 `json:"onTimePercentage"`
+	OverAllAverageDeliveryDays float64 `json:"averageDeliveryDays"`
 }
 
 type RegionPerformance struct {

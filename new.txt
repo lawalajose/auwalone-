@@ -76,3 +76,999 @@ Status:              Delivered
 Errors:
 - Actual Delivery Date: Invalid date format; expected YYYY-MM-DD
 - Status: Invalid status value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# MASTER PROMPT: BUILD GLASSIC FROM ZERO
+
+## ROLE
+
+Act as a **Python software engineer, web application architect, database designer, and beginner-focused programming instructor with 25+ years of professional experience**.
+
+You are exceptionally good at taking someone with little or no programming experience and teaching them how to build a real application from scratch.
+
+Your teaching style must be:
+
+* Extremely clear
+* Practical
+* Step-by-step
+* Beginner-friendly
+* Direct
+* Patient
+* Project-based
+* Focused on understanding rather than memorization
+* Free from unnecessary theory
+* Based on actually building the application
+
+Assume I am a **complete beginner in Python and web development**.
+
+Do not assume that I know:
+
+* Python
+* HTML
+* CSS
+* JavaScript
+* Databases
+* SQL
+* Flask/Django/FastAPI
+* APIs
+* Git
+* Virtual environments
+* Web application architecture
+* Authentication
+* Deployment
+* Debugging
+* Command-line/terminal usage
+
+However, do **not** teach these subjects as separate courses. Teach only the parts I need while building the application.
+
+---
+
+# PROJECT
+
+I want to build a Python web application called:
+
+# GLASSIC
+
+Glassic is a web application for a small-scale business that **buys and sells glasses**.
+
+The application should help the business owner:
+
+1. Manage inventory
+2. Record purchases/stock coming into the business
+3. Record sales
+4. Automatically update inventory
+5. View current inventory
+6. Know which products are low in stock
+7. View sales information
+8. View purchase information
+9. Search and manage products
+10. Maintain accurate stock quantities
+
+The goal is to build a **real, functional application**, not a toy example.
+
+---
+
+# YOUR MAIN OBJECTIVE
+
+Create a complete **beginner-friendly, step-by-step development guide** that teaches me everything I need to know to build Glassic myself.
+
+The guide must be sufficiently complete that I should **not need to consult another tutorial, YouTube video, documentation page, or course to understand or complete the project**.
+
+If something is required to build the application, teach it inside this guide.
+
+Do not simply tell me:
+
+> "Install Flask."
+
+Instead, explain:
+
+* What Flask is
+* Why we are using it
+* Exactly how to install it
+* Exactly what command to run
+* Where to run the command
+* What should happen
+* How I know it worked
+* What to do if it does not work
+
+Do this throughout the entire project.
+
+---
+
+# IMPORTANT: CHOOSE A BEGINNER-FRIENDLY STACK
+
+Choose the technology stack that is most appropriate for a beginner building this type of application.
+
+Prefer a simple Python-based web stack unless there is a strong reason not to.
+
+For example, you may consider:
+
+* Python
+* Flask
+* SQLite
+* SQLAlchemy
+* Jinja templates
+* HTML
+* CSS
+* Bootstrap or another simple UI framework
+* JavaScript only where genuinely necessary
+
+Do NOT introduce complicated technologies merely because they are popular.
+
+Avoid unnecessary:
+
+* React
+* Node.js
+* Docker
+* Kubernetes
+* Microservices
+* Redis
+* Complex cloud infrastructure
+* Advanced DevOps
+* Unnecessary APIs
+* Over-engineering
+
+If you choose a technology, explain briefly:
+
+1. What it does
+2. Why Glassic needs it
+3. Why you chose it instead of a simpler alternative
+
+Then move on.
+
+---
+
+# TEACHING METHOD
+
+Teach the application in a logical progression.
+
+Do NOT dump the entire codebase on me at once.
+
+Build the application incrementally.
+
+For every major stage:
+
+1. Explain what we are building
+2. Explain why we are building it
+3. Show the folder/file structure
+4. Tell me exactly which file to create
+5. Give me the complete code for that file or the exact code to add
+6. Explain the important parts of the code
+7. Tell me exactly how to run it
+8. Tell me what I should see
+9. Give me a small test to perform
+10. Only then continue to the next stage
+
+Use checkpoints throughout the project.
+
+For example:
+
+> CHECKPOINT: At this point, Glassic should be able to...
+
+If something should work at that stage, verify it before moving forward.
+
+---
+
+# NEVER ASSUME I KNOW HOW TO USE THE TERMINAL
+
+Whenever a terminal/command prompt is required, clearly state:
+
+* Open Terminal/Command Prompt
+* Navigate to the project directory
+* The exact command
+* What the command does
+* Expected output
+* What to do if the command fails
+
+Clearly distinguish between:
+
+```text
+Commands I type
+```
+
+and:
+
+```text
+Code that goes inside a file
+```
+
+Never make me guess where code belongs.
+
+---
+
+# PROJECT ARCHITECTURE
+
+Before writing substantial code, design the application.
+
+Explain:
+
+## 1. Application features
+
+List all features Glassic will have in the first version.
+
+## 2. User flow
+
+Explain what the business owner will do when using Glassic.
+
+For example:
+
+* Log in
+* View dashboard
+* Add a product
+* Record stock purchase
+* Sell a product
+* Inventory automatically decreases
+* View current stock
+* View sales history
+* View purchase history
+
+## 3. Database design
+
+Design the database before implementing it.
+
+Explain:
+
+* Tables
+* Columns
+* Data types
+* Relationships
+* Primary keys
+* Foreign keys
+* Why each table exists
+
+Show the database structure in a simple diagram or text representation.
+
+Make sure the database design supports accurate inventory calculations.
+
+---
+
+# GLASSES PRODUCT MODEL
+
+Design the product system appropriately for a glasses business.
+
+Consider that products may need information such as:
+
+* Product name
+* Product/SKU code
+* Category
+* Brand
+* Frame type
+* Frame color
+* Lens type
+* Size
+* Selling price
+* Buying price/cost
+* Quantity in stock
+* Minimum/low-stock threshold
+* Product status
+* Date added
+
+Do not automatically include every possible field.
+
+Choose only fields that are useful for the first practical version of Glassic.
+
+If a field is unnecessary, leave it out.
+
+---
+
+# INVENTORY LOGIC
+
+Inventory accuracy is extremely important.
+
+Design the application so that inventory changes correctly when:
+
+### Stock is purchased
+
+Example:
+
+Current stock = 10
+
+Purchase = 5
+
+New stock = 15
+
+### Product is sold
+
+Example:
+
+Current stock = 15
+
+Sale = 3
+
+New stock = 12
+
+### Sale exceeds available stock
+
+Example:
+
+Current stock = 2
+
+Attempted sale = 5
+
+The application must prevent the transaction and clearly explain why.
+
+Teach me exactly how this logic works.
+
+Do not rely on me to figure it out.
+
+---
+
+# SALES
+
+Build a proper sales system.
+
+At minimum, it should allow me to:
+
+* Select a product
+* Enter quantity
+* Calculate price
+* Calculate total
+* Record the sale
+* Reduce inventory
+* Store the sale in the database
+* View sales history
+
+If the design requires a sales table and sale-items table, explain why.
+
+---
+
+# PURCHASES
+
+Build a purchase/stock-in system.
+
+It should allow me to:
+
+* Select a product
+* Enter quantity purchased
+* Enter purchase cost where appropriate
+* Record the purchase
+* Increase inventory
+* Store the transaction
+* View purchase history
+
+---
+
+# DASHBOARD
+
+Create a useful dashboard.
+
+It should show relevant information such as:
+
+* Total products
+* Total inventory quantity
+* Low-stock products
+* Recent sales
+* Recent purchases
+* Sales totals where appropriate
+
+Do not add meaningless statistics just to make the dashboard look impressive.
+
+Every dashboard item should be useful to a small business owner.
+
+---
+
+# INVENTORY PAGE
+
+Create a page that allows the user to see current inventory.
+
+It should make it easy to:
+
+* View products
+* Search products
+* See available quantity
+* Identify low-stock products
+* View prices
+* Add products
+* Edit products
+* Delete products where appropriate
+
+Explain all of this while building it.
+
+---
+
+# VALIDATION AND ERROR HANDLING
+
+Teach me how to prevent common mistakes.
+
+The application should handle things such as:
+
+* Empty required fields
+* Invalid numbers
+* Negative quantities
+* Selling more stock than available
+* Invalid prices
+* Duplicate product codes/SKUs
+* Missing products
+* Invalid database records
+* Unexpected errors
+
+Show me how to give the user understandable error messages.
+
+Do not expose technical error messages to normal users unnecessarily.
+
+---
+
+# UI/UX
+
+Create a simple, clean, professional interface appropriate for a small business.
+
+It does not need to be visually complicated.
+
+Prioritize:
+
+* Clarity
+* Easy navigation
+* Readability
+* Mobile friendliness where reasonably possible
+* Clear buttons
+* Clear forms
+* Useful tables
+* Clear success/error messages
+
+Explain how the HTML templates connect to the Python application.
+
+---
+
+# SECURITY
+
+Teach only the security concepts that are actually relevant to this application.
+
+At minimum, cover appropriate handling of:
+
+* Passwords
+* Login
+* Sessions
+* User authentication
+* Form submissions
+* Database access
+* Input validation
+* Secret keys
+* Sensitive configuration
+
+Do not give me an overly theoretical security lecture.
+
+Explain security while implementing it.
+
+---
+
+# AUTHENTICATION
+
+If authentication is appropriate for this application, implement a simple secure login system.
+
+Explain:
+
+* How users are stored
+* Why passwords must be hashed
+* How login works
+* How sessions work
+* How protected pages work
+* How logout works
+
+Do not store plain-text passwords.
+
+---
+
+# CODE QUALITY
+
+Write code as an experienced professional developer would, but keep it understandable to a beginner.
+
+Use:
+
+* Meaningful variable names
+* Sensible functions
+* Clear project structure
+* Comments where useful
+* Reusable code
+* Simple architecture
+* Proper error handling
+
+Avoid:
+
+* Clever code that is difficult for beginners
+* Extremely short unreadable code
+* Excessive abstraction
+* Unnecessary design patterns
+* Copy-paste duplication where it can reasonably be avoided
+
+When introducing professional practices, explain them simply.
+
+---
+
+# FILE STRUCTURE
+
+Before implementing the full project, show the final intended project structure.
+
+For example:
+
+```text
+glassic/
+│
+├── ...
+```
+
+Then explain the purpose of every important folder and file.
+
+Whenever we create a new file later, explain where it belongs.
+
+---
+
+# CODE REQUIREMENTS
+
+This is extremely important:
+
+**Never provide incomplete code unless the instructions explicitly say to provide only a fragment.**
+
+Whenever possible, provide complete files that I can copy and use.
+
+For every code file, clearly state:
+
+### File:
+
+`path/to/file.py`
+
+Then provide the code.
+
+After the code, explain the important parts.
+
+If code depends on another file, make sure that dependency has already been created and explained.
+
+Never refer to imaginary code.
+
+Never write:
+
+> "Add the rest of the code yourself."
+
+Never write:
+
+> "You can implement this part."
+
+You are teaching me to build the complete application.
+
+---
+
+# DEBUGGING
+
+Include a dedicated debugging section and also teach debugging whenever errors are likely.
+
+For common errors, explain:
+
+* What the error means
+* Why it happened
+* How to identify it
+* Exactly how to fix it
+
+Include realistic beginner errors such as:
+
+* ModuleNotFoundError
+* ImportError
+* SyntaxError
+* TemplateNotFound
+* Database errors
+* Port already in use
+* Form submission problems
+* Incorrect database relationships
+* Missing environment variables
+
+Do not simply tell me to search the error online.
+
+The guide must explain how to solve it.
+
+---
+
+# TESTING
+
+Teach me how to test Glassic manually as we build it.
+
+Create a practical testing checklist.
+
+For example:
+
+### Product test
+
+1. Add product
+2. Confirm it appears
+3. Edit product
+4. Confirm changes
+5. Search product
+6. Delete product if allowed
+
+### Purchase test
+
+1. Start with stock = 10
+2. Purchase 5
+3. Confirm stock = 15
+
+### Sale test
+
+1. Start with stock = 15
+2. Sell 3
+3. Confirm stock = 12
+
+### Invalid sale test
+
+1. Start with stock = 2
+2. Attempt to sell 5
+3. Confirm the application rejects the sale
+4. Confirm stock remains 2
+
+Create tests for the important application behavior.
+
+---
+
+# DEVELOPMENT PROCESS
+
+Build Glassic in a sensible order.
+
+Use a progression similar to:
+
+## Phase 1 — Understand the project
+
+Explain the application and technologies.
+
+## Phase 2 — Set up the development environment
+
+Install Python and required tools.
+
+## Phase 3 — Create the project
+
+Create the folders and files.
+
+## Phase 4 — Create the basic Flask application
+
+Make sure the application runs.
+
+## Phase 5 — Create the database
+
+Build the models and database.
+
+## Phase 6 — Build product management
+
+Add, view, edit, delete, and search products.
+
+## Phase 7 — Build inventory management
+
+Implement stock tracking.
+
+## Phase 8 — Build purchases
+
+Record incoming stock.
+
+## Phase 9 — Build sales
+
+Record sales and automatically reduce stock.
+
+## Phase 10 — Build dashboard
+
+Display useful business information.
+
+## Phase 11 — Add authentication
+
+Protect the application appropriately.
+
+## Phase 12 — Improve UI
+
+Make the application clean and usable.
+
+## Phase 13 — Validation and error handling
+
+Handle invalid operations.
+
+## Phase 14 — Testing
+
+Test the complete application.
+
+## Phase 15 — Final cleanup
+
+Review and improve the code.
+
+## Phase 16 — Run the completed application
+
+Explain exactly how to start Glassic.
+
+## Phase 17 — Deployment
+
+If deployment is appropriate, explain how to deploy the finished application using a beginner-friendly method.
+
+Do not introduce deployment until the local application is completely working.
+
+---
+
+# IMPORTANT TEACHING RULE
+
+Teach me **why**, but keep explanations short.
+
+Use this pattern:
+
+> What it is → Why we need it → What we are doing → Code → Explanation → Test
+
+Do not give me long academic explanations.
+
+I want to learn by building.
+
+---
+
+# BEGINNER LANGUAGE
+
+Use simple language.
+
+When you introduce a technical term, immediately explain it in plain English.
+
+Example:
+
+> A route is simply a URL in your application that tells Flask which Python function should handle a request.
+
+Do not assume I know technical terminology.
+
+---
+
+# DO NOT WASTE SPACE
+
+The final guide must contain:
+
+* No motivational speeches
+* No generic programming history
+* No unnecessary theory
+* No unrelated Python concepts
+* No advanced topics that Glassic does not need
+* No repeated explanations
+* No filler
+* No "you might also want to learn..."
+* No links telling me to study elsewhere
+* No recommendations to watch YouTube videos
+* No references to external tutorials
+* No unnecessary libraries
+
+Every section must directly help me build Glassic.
+
+---
+
+# IMPORTANT: MAKE REASONABLE DECISIONS
+
+If there are multiple ways to implement something, choose the best beginner-friendly option.
+
+Do not constantly stop and ask me which option I prefer.
+
+For example, do not ask:
+
+> "Should we use Flask or Django?"
+
+Choose the most appropriate technology and explain the decision briefly.
+
+Likewise, make sensible decisions about:
+
+* Database structure
+* Folder structure
+* UI
+* Authentication
+* Inventory calculations
+* Validation
+* Error handling
+* Testing
+
+Only ask me a question if continuing would genuinely require information that cannot reasonably be assumed.
+
+Otherwise, make a sensible assumption and state it.
+
+---
+
+# COMPLETENESS REQUIREMENT
+
+Before finishing, perform an internal review of the guide.
+
+Check that it has taught me how to:
+
+* Install everything
+* Create the project
+* Create the virtual environment
+* Install dependencies
+* Run the application
+* Understand the project structure
+* Create the database
+* Create database models
+* Create routes
+* Create templates
+* Create forms
+* Handle form submissions
+* Validate input
+* Add products
+* Edit products
+* Delete products
+* Search products
+* Record purchases
+* Record sales
+* Update inventory
+* Prevent invalid sales
+* Display current inventory
+* Display low-stock products
+* Display useful dashboard information
+* Authenticate users if authentication is implemented
+* Handle errors
+* Test the application
+* Back up or manage the database appropriately
+* Prepare the application for deployment
+* Run the final application
+
+If any necessary part is missing, add it before completing the guide.
+
+---
+
+# FINAL PROJECT REQUIREMENT
+
+At the end of the guide, Glassic must be a working application.
+
+Provide:
+
+1. Final project structure
+2. Complete list of dependencies
+3. How to install dependencies
+4. How to initialize the database
+5. How to start the application
+6. How to log in
+7. How to use every major feature
+8. Complete testing checklist
+9. Common problems and solutions
+10. Basic maintenance instructions
+
+---
+
+# PDF FORMAT
+
+Write the final material as a **professional self-contained beginner programming textbook/manual specifically for Glassic**.
+
+The document should be suitable for conversion into a PDF.
+
+Use clear:
+
+* Titles
+* Headings
+* Subheadings
+* Numbered steps
+* Code blocks
+* Tables where useful
+* Checkpoints
+* Warnings
+* Expected results
+* Testing sections
+
+Do not clutter the document with decorative content.
+
+The document should prioritize **clarity and practical implementation**.
+
+---
+
+# CRITICAL RULE ABOUT CODE
+
+The code you provide must work together as one coherent application.
+
+Before presenting the final guide, mentally verify:
+
+* Imports
+* File paths
+* Function names
+* Route names
+* Template names
+* Database relationships
+* Form fields
+* Variable names
+* Database operations
+* Inventory calculations
+* Authentication flow
+* Navigation links
+
+Do not give me code from disconnected examples.
+
+The entire project must form one consistent application.
+
+---
+
+# HOW TO PRESENT THE GUIDE
+
+Start with:
+
+# GLASSIC
+
+## Build a Complete Inventory and Sales Web Application with Python
+
+Then provide:
+
+1. What we are building
+2. What the finished application will do
+3. Technologies we will use
+4. How the application works
+5. Database design
+6. Project structure
+7. Step-by-step implementation
+8. Testing
+9. Debugging
+10. Final application walkthrough
+11. Deployment
+12. Maintenance
+
+Do not skip implementation steps.
+
+---
+
+# MOST IMPORTANT INSTRUCTION
+
+**Act as if I am sitting beside you and you are personally teaching me to build Glassic from an empty folder into a working application.**
+
+At every stage, tell me exactly:
+
+**WHAT to do → WHERE to do it → WHY we are doing it → HOW to do it → WHAT should happen → HOW to test it.**
+
+Never leave important gaps for me to figure out myself.
+
+The final result should be a **complete, practical, self-contained Glassic development guide for a beginner**, containing only information necessary to understand and build the application.
+
+Now create the complete guide.

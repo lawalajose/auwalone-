@@ -56,6 +56,8 @@ func writeTextReport(r model.ReportFormat) error {
 	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
 	b.WriteString("Region             Shipments    On-time %    Avg Delivery\n")
 	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
+	writeRegionPerformance(&b, r.Regions)
+	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
 
 	b.WriteString("\n\n\n\n")
 	b.WriteString("SHIPMENT VALIDATION ERROR REPORT\n")
@@ -115,4 +117,10 @@ func writeJSONReport(r model.ReportFormat) error {
 	}
 
 	return nil
+}
+
+func writeRegionPerformance(b *strings.Builder, regions []model.RegionPerformance) {
+	for _, d := range regions {
+		fmt.Fprintf(b, "%-16s %10d %10.1f%% %12.1f days\n", d.Region, d.Shipments, d.OnTimePercentage, d.AverageDeliveryDays)
+	}
 }

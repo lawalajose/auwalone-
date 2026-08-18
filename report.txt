@@ -1,6 +1,6 @@
 RawShipment Report
 ──────────────────────────────────────────────────────────────────────
-Generated                2026-08-17T11:05:19Z
+Generated                2026-08-18T14:49:41Z
 Input                    shipments_2000.csv
 
 SUMMARY
@@ -21,6 +21,11 @@ DELIVERY PERFORMANCE BY REGION
 ──────────────────────────────────────────────────────────────────────
 Region             Shipments    On-time %    Avg Delivery
 ──────────────────────────────────────────────────────────────────────
+West                    282       43.6%          6.4 days
+South                   258       54.7%          5.7 days
+Central                 299       44.1%          6.2 days
+North                   282       46.8%          6.3 days
+East                    286       49.7%          6.2 days
 
 
 

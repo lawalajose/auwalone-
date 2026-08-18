@@ -6,27 +6,6 @@ import (
 	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
-var validRegion = map[string]bool{
-	"East":    true,
-	"West":    true,
-	"South":   true,
-	"Central": true,
-	"North":   true,
-}
-
-var validCarriers = map[string]bool{
-	"UPS":   true,
-	"FedEx": true,
-	"DHL":   true,
-}
-
-var validStatus = map[string]bool{
-	"Delivered":  true,
-	"In Transit": true,
-	"Delayed":    true,
-	"Cancelled":  true,
-}
-
 func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.ShipmentErrorReport) {
 
 	var shipmentError []model.ShipmentErrorReport
@@ -117,7 +96,7 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 			errors = append(errors, errr)
 		}
 
-		if !validStatus[data.ShipmentStatus] {
+		if !model.ValidStatus[data.ShipmentStatus] {
 			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
@@ -130,7 +109,7 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 
 		}
 
-		if !validCarriers[data.Carrier] {
+		if !model.ValidCarriers[data.Carrier] {
 			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
@@ -175,7 +154,7 @@ func validShipmentID(id string) bool {
 }
 
 func validRegionn(reg string) bool {
-	return validRegion[reg]
+	return model.ValidRegion[reg]
 }
 
 func validDate(date string) (time.Time, bool) {
