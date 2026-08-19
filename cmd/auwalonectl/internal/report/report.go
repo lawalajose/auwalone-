@@ -59,6 +59,11 @@ func writeTextReport(r model.ReportFormat) error {
 	writeRegionPerformance(&b, r.Regions)
 	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
 	fmt.Fprintf(&b, "%-16s %10d %10.1f%% %12.1f days\n", "Overall", r.Overall.OverAllShipments, r.Overall.OverAllOnTimePercentage, r.Overall.OverAllAverageDeliveryDays)
+	b.WriteString("\n")
+	b.WriteString("STATUS\n")
+	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
+	b.WriteString("✓ Report generated successfully\n")
+	fmt.Fprintf(&b, "⚠ %d %s\n", len(r.ShipmentError), "rows excluded from shipment statistics")
 
 	b.WriteString("\n\n\n\n")
 	b.WriteString("SHIPMENT VALIDATION ERROR REPORT\n")

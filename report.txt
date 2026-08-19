@@ -1,6 +1,6 @@
 RawShipment Report
 ──────────────────────────────────────────────────────────────────────
-Generated                2026-08-18T17:53:33Z
+Generated                2026-08-19T09:57:30Z
 Input                    shipments_2000.csv
 
 SUMMARY
@@ -28,6 +28,11 @@ Central                 299       44.1%          6.2 days
 North                   282       46.8%          6.3 days
 ──────────────────────────────────────────────────────────────────────
 Overall                1407       47.8%          6.1 days
+
+STATUS
+──────────────────────────────────────────────────────────────────────
+✓ Report generated successfully
+⚠ 4 rows excluded from shipment statistics
 
 
 
