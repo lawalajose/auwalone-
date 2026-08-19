@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T14:49:41Z",
+  "generatedAt": "2026-08-18T17:53:33Z",
   "inputFile": "shipments_2000.csv",
   "totalRows": 2000,
   "validShipments": 1996,
@@ -10,6 +10,12 @@
   "onTimePercentage": 47.61904761904761,
   "averageDeliveryDays": 6.157782515991471,
   "regions": [
+    {
+      "region": "East",
+      "shipments": 286,
+      "onTimePercentage": 49.65034965034965,
+      "averageDeliveryDays": 6.153846153846154
+    },
     {
       "region": "West",
       "shipments": 282,
@@ -33,14 +39,13 @@
       "shipments": 282,
       "onTimePercentage": 46.808510638297875,
       "averageDeliveryDays": 6.25177304964539
-    },
-    {
-      "region": "East",
-      "shipments": 286,
-      "onTimePercentage": 49.65034965034965,
-      "averageDeliveryDays": 6.153846153846154
     }
   ],
+  "overall": {
+    "shipments": 1407,
+    "onTimePercentage": 47.77484030931528,
+    "averageDeliveryDays": 6.149496286759372
+  },
   "dataQuality": {
     "missingShipmentIds": 0,
     "invalidDates": 0,

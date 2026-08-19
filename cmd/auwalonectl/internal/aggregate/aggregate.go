@@ -23,7 +23,7 @@ func Aggregator(cleanData []model.CleanedShipment, errors []model.ShipmentErrorR
 	data.OnTimePercentage = c
 	data.AverageDeliveryDays = d
 
-	data.Regions = deliveryRegion(cleanData)
+	data.Regions, data.Overall = deliveryRegion(cleanData)
 	data.ShipmentError = errors
 
 	return data
@@ -83,12 +83,19 @@ func performaceByRegion(cleanData []model.CleanedShipment, region string) (int, 
 
 }
 
-func deliveryRegion(cleanData []model.CleanedShipment) []model.RegionPerformance {
+func deliveryRegion(cleanData []model.CleanedShipment) ([]model.RegionPerformance, model.OverAllPerformance) {
 	var sliceRegions []model.RegionPerformance
+	var overall model.OverAllPerformance
+	var sliceRegion model.RegionPerformance
+	var totalShipment int
+	var totalOntime, totalAverageDays float64
 
-	for k, _ := range model.ValidRegion {
-		var sliceRegion model.RegionPerformance
+	for k := range model.ValidRegion {
+
 		a, b, c := performaceByRegion(cleanData, k)
+		totalShipment += a
+		totalOntime += b
+		totalAverageDays += c
 
 		sliceRegion.Region = k
 		sliceRegion.Shipments = a
@@ -97,6 +104,9 @@ func deliveryRegion(cleanData []model.CleanedShipment) []model.RegionPerformance
 
 		sliceRegions = append(sliceRegions, sliceRegion)
 	}
+	overall.OverAllShipments = totalShipment
+	overall.OverAllOnTimePercentage = totalOntime / float64(len(model.ValidRegion))
+	overall.OverAllAverageDeliveryDays = totalAverageDays / float64(len(model.ValidRegion))
 
-	return sliceRegions
+	return sliceRegions, overall
 }
