@@ -150,7 +150,21 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 }
 
 func validShipmentID(id string) bool {
-	return !(len(id) != 8 || id == "")
+	if len(id) != 8 {
+		return false
+	}
+
+	if id[:3] != "SHP" {
+		return false
+	}
+
+	for _, c := range id[3:] {
+		if c < '0' || c > '9' {
+			return false
+		}
+	}
+
+	return true
 }
 
 func validRegionn(reg string) bool {

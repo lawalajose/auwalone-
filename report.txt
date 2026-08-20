@@ -1,105 +1,42 @@
 RawShipment Report
 ──────────────────────────────────────────────────────────────────────
-Generated                2026-08-19T09:57:30Z
-Input                    shipments_2000.csv
+Generated                2026-08-20T14:51:14Z
+Input                    shipmenttest.csv
 
 SUMMARY
 ──────────────────────────────────────────────────────────────────────
-Total rows               2000
-Valid shipments          1996
-Invalid rows             4
-Validation rate          99.8%
+Total rows               0
+Valid shipments          0
+Invalid rows             0
+Validation rate          NaN%
 
 ON-TIME PERFORMANCE
 ──────────────────────────────────────────────────────────────────────
-On-time shipments        670
-Late shipments           737
-On-time rate             47.6%
-Average delivery days    6.2
+On-time shipments        0
+Late shipments           0
+On-time rate             NaN%
+Average delivery days    NaN
 
 DELIVERY PERFORMANCE BY REGION
 ──────────────────────────────────────────────────────────────────────
 Region             Shipments    On-time %    Avg Delivery
 ──────────────────────────────────────────────────────────────────────
-East                    286       49.7%          6.2 days
-West                    282       43.6%          6.4 days
-South                   258       54.7%          5.7 days
-Central                 299       44.1%          6.2 days
-North                   282       46.8%          6.3 days
+East                      0        NaN%          NaN days
+West                      0        NaN%          NaN days
+South                     0        NaN%          NaN days
+Central                   0        NaN%          NaN days
+North                     0        NaN%          NaN days
 ──────────────────────────────────────────────────────────────────────
-Overall                1407       47.8%          6.1 days
+Overall                   0        NaN%          NaN days
 
 STATUS
 ──────────────────────────────────────────────────────────────────────
 ✓ Report generated successfully
-⚠ 4 rows excluded from shipment statistics
+⚠ 0 rows excluded from shipment statistics
 
 
 
 
 SHIPMENT VALIDATION ERROR REPORT
 ======================================================================
-
-Row 50
-----------------------------------------
-Shipment ID:             
-Origin Region:           West
-Destination Region:      South
-Shipment Date:           2026-03-26
-Expected Delivery Date:  2026-04-01
-Actual Delivery Date:    2026-04-03
-Shipment Status:         Delivered
-Carrier:                 UPS
-
-Errors:
-- ShipmentID: Invalid shipment ID
-
-
-
-Row 150
-----------------------------------------
-Shipment ID:             SHP00150
-Origin Region:           Central
-Destination Region:      West
-Shipment Date:           invalid-date
-Expected Delivery Date:  2026-01-10
-Actual Delivery Date:    2026-01-12
-Shipment Status:         Delivered
-Carrier:                 FedEx
-
-Errors:
-- Shipment Date: Invalid Date Format, expected YYYY-MM-DD format
-
-
-
-Row 200
-----------------------------------------
-Shipment ID:             SHP00200
-Origin Region:           West
-Destination Region:      Central
-Shipment Date:           2026-01-08
-Expected Delivery Date:  2026-01-15
-Actual Delivery Date:    2026-01-13
-Shipment Status:         Completed
-Carrier:                 FedEx
-
-Errors:
-- Shipment Status: Invalid Shipment Staus, expected (Delivered, In Transit, Delayed, Cancelled)
-
-
-
-Row 250
-----------------------------------------
-Shipment ID:             SHP00250
-Origin Region:           
-Destination Region:      East
-Shipment Date:           2026-03-26
-Expected Delivery Date:  2026-03-30
-Actual Delivery Date:    
-Shipment Status:         Delayed
-Carrier:                 DHL
-
-Errors:
-- Origin Region: Invalid Origin Region, Expected (East, West, South, Central, North)
-
-
+No validation errors found.

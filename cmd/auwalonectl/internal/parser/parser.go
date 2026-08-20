@@ -9,7 +9,7 @@ import (
 	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/model"
 )
 
-func ParserFxn(filePath string) ([]model.RawShipment, error) {
+func ParseShipments(filePath string) ([]model.RawShipment, error) {
 
 	file, err := os.Open(filePath)
 	if err != nil {
