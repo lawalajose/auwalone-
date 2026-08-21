@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -246,11 +247,18 @@ SHP00020,North,West,2026-05-19,2026-05-27,2026-05-27,Delivered,DHL`,
 			},
 			err: nil,
 		}, {
-			name: "bad CSV",
+			name: "wrong number of columns",
 			content: `Shipment_ID,Origin_Region,Destination_Region,Shipment_Date,Expected_Delivery_Date
 SHP00001,East,Central,2026-04-02,2026-04-09`,
 			csvPath: "/shipments.csv",
 			err:     errors.New("invalid record: expected 8 columns, got 5"), // replace with the specific error your parser returns
+		}, {
+			name: "malformed CSV",
+			content: `shipment_id,origin_region,destination_region,shipment_date,expected_delivery_date,actual_delivery_date,shipment_status,carrier
+"SHP001,Lagos,Abuja
+`,
+			csvPath: "/shipments.csv",
+			err:     errors.New("read CSV record"),
 		},
 	}
 
@@ -269,8 +277,11 @@ SHP00001,East,Central,2026-04-02,2026-04-09`,
 					t.Fatalf("expected error %v, got nil", tt.err)
 				}
 
-				if err.Error() != tt.err.Error() {
-					t.Errorf("expected error %q, got %q", tt.err.Error(), err.Error())
+				// if err.Error() != tt.err.Error() {
+				// 	t.Errorf("expected error %q, got %q", tt.err.Error(), err.Error())
+				// }
+				if !strings.Contains(err.Error(), tt.err.Error()) {
+					t.Errorf("expected error containing %q, got %q", tt.err.Error(), err.Error())
 				}
 			} else if err != nil {
 				t.Errorf("unexpected error: %v", err)

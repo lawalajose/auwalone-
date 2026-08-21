@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/aggregate"
 	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/parser"
 	"github.com/lawalajose/auwalone-/cmd/auwalonectl/internal/report"
@@ -11,11 +9,9 @@ import (
 
 func main() {
 
-	file := "shipmenttest.csv"
+	file := "shipments_2000.csv"
 
-	rawData, err := parser.ParseShipments(file)
-	fmt.Printf("%#v\n", rawData)
-	fmt.Printf("%#v\n", err)
+	rawData, _ := parser.ParseShipments(file)
 
 	cleanData, errr := validator.Validator(rawData)
 

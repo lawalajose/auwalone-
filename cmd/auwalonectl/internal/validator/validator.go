@@ -136,8 +136,7 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 			Carrier:              data.Carrier,
 		}
 
-		if count != 0 {
-			count = 0
+		if len(errors) > 0 {
 			shipmentError = append(shipmentError, shipment_err)
 			continue
 		}

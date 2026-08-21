@@ -1,2 +1,6 @@
-Shipment_ID,Origin_Region,Destination_Region,Shipment_Date,Expected_Delivery_Date
-SHP00001,East,Central,2026-04-02,2026-04-09
+Shipment_ID,Origin_Region,Destination_Region,Shipment_Date,Expected_Delivery_Date,Actual_Delivery_Date,Shipment_Status,Carrier
+SHP00001,East,Central,2026-04-02,2026-04-09,2026-04-08,Delivered,UPS
+SHP00002,Central,West,2026-05-13,2026-05-19,2026-05-19,Delivered,UPS
+SHP00003,"North,South,2026-02-08,2026-02-15,,In Transit,FedEx
+SHP00004,North,West,2026-04-15,2026-04-22,,In Transit,FedEx
+SHP00005,North,South,2026-04-16,2026-04-20,2026-04-18,Delivered,D
