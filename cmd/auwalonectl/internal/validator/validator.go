@@ -11,14 +11,11 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 	var shipmentError []model.ShipmentErrorReport
 
 	var clean_shipment []model.CleanedShipment
-	count := 0
 
 	for i, data := range rawData {
 		var errors []model.ValidationError
 
 		if !validShipmentID(data.ShipmentID) {
-			count++
-
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "ShipmentID",
@@ -30,7 +27,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 		}
 
 		if !validRegionn(data.OriginRegion) {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Origin Region",
@@ -43,7 +39,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 		}
 
 		if !validRegionn(data.DestinationRegion) {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Destination Region",
@@ -57,7 +52,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 
 		shipment_date, isDate := validDate(data.ShipmentDate)
 		if !isDate {
-			count++
 			errr := model.ValidationError{
 
 				Row:     i + 1,
@@ -71,7 +65,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 
 		expDelivery_date, isDate := validDate(data.ExpectedDeliveryDate)
 		if !isDate {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Expected Delivery Date",
@@ -85,7 +78,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 		actDelivery_date, isDate := validDateActualDeliveryDate(data.ActualDeliveryDate, data.ShipmentStatus)
 
 		if !isDate {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Actual Delivery Date",
@@ -97,7 +89,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 		}
 
 		if !model.ValidStatus[data.ShipmentStatus] {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Shipment Status",
@@ -110,7 +101,6 @@ func Validator(rawData []model.RawShipment) ([]model.CleanedShipment, []model.Sh
 		}
 
 		if !model.ValidCarriers[data.Carrier] {
-			count++
 			errr := model.ValidationError{
 				Row:     i + 1,
 				Column:  "Carrier",

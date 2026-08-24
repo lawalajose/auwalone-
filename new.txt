@@ -81,6 +81,34 @@ Errors:
 
 
 
+northline/
+│
+├── cmd/
+│   ├── auwalonectl/
+│   │   └── main.go
+│   │
+│   └── northlineapi/
+│       └── main.go
+│
+├── internal/
+│   ├── domain/
+│   │   └── shipment.go
+│   │
+│   ├── repository/
+│   │   └── shipment.go
+│   │
+│   └── http/
+│       ├── handler.go
+│       └── middleware.go
+│
+└── cmd/auwalonectl/internal/
+    ├── aggregate/
+    ├── model/
+    ├── parser/
+    ├── report/
+    └── validator/
+
+
 
 
 

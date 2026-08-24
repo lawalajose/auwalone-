@@ -60,6 +60,13 @@ func writeTextReport(r model.ReportFormat) error {
 	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
 	fmt.Fprintf(&b, "%-16s %10d %10.1f%% %12.1f days\n", "Overall", r.Overall.OverAllShipments, r.Overall.OverAllOnTimePercentage, r.Overall.OverAllAverageDeliveryDays)
 	b.WriteString("\n")
+
+	b.WriteString("DATA QUALITY\n")
+	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
+	writeDataQuality(&b, r.DataQuality)
+
+	b.WriteString("\n")
+	b.WriteString("\n")
 	b.WriteString("STATUS\n")
 	b.WriteString("──────────────────────────────────────────────────────────────────────\n")
 	b.WriteString("✓ Report generated successfully\n")
@@ -129,4 +136,14 @@ func writeRegionPerformance(b *strings.Builder, regions []model.RegionPerformanc
 	for _, d := range regions {
 		fmt.Fprintf(b, "%-16s %10d %10.1f%% %12.1f days\n", d.Region, d.Shipments, d.OnTimePercentage, d.AverageDeliveryDays)
 	}
+}
+
+func writeDataQuality(b *strings.Builder, data model.DataQuality) {
+
+	fmt.Fprintf(b, "Invalid ShipmentIDs            %d\n", data.InvalidShipmentIDs)
+	fmt.Fprintf(b, "Invalid Regions                %d\n", data.InvalidRegions)
+	fmt.Fprintf(b, "Invalid Dates                  %d\n", data.InvalidDates)
+	fmt.Fprintf(b, "Invalid Status                 %d\n", data.InvalidStatus)
+	fmt.Fprintf(b, "Invalid Carrier                %d\n", data.InvalidCarriers)
+
 }

@@ -15,7 +15,9 @@ func Aggregator(cleanData []model.CleanedShipment, errors []model.ShipmentErrorR
 	data.TotalRows = len(rawaData)
 	data.ValidShipments = len(cleanData)
 	data.InvalidRows = len(rawaData) - len(cleanData)
-	data.ValidationRate = (float64(data.ValidShipments) / float64(data.TotalRows)) * 100
+	if data.TotalRows > 0 {
+		data.ValidationRate = (float64(data.ValidShipments) / float64(data.TotalRows)) * 100
+	}
 
 	a, b, c, d := onTimePerformance(cleanData)
 	data.OnTimeShipments = a
@@ -25,6 +27,14 @@ func Aggregator(cleanData []model.CleanedShipment, errors []model.ShipmentErrorR
 
 	data.Regions, data.Overall = deliveryRegion(cleanData)
 	data.ShipmentError = errors
+
+	l, m, n, o, p := dataQuality(errors)
+
+	data.DataQuality.InvalidShipmentIDs = l
+	data.DataQuality.InvalidRegions = m
+	data.DataQuality.InvalidDates = n
+	data.DataQuality.InvalidStatus = o
+	data.DataQuality.InvalidCarriers = p
 
 	return data
 }
@@ -42,12 +52,15 @@ func onTimePerformance(cleanData []model.CleanedShipment) (int, int, float64, fl
 		delivered++
 		if !data.ActualDeliveryDate.After(data.ExpectedDeliveryDate) {
 			onTime++
-
 		}
 
 		days := int(data.ActualDeliveryDate.Sub(data.ShipmentDate).Hours() / 24)
 		totalDays += days
 
+	}
+
+	if delivered == 0 {
+		return 0, 0, 0, 0
 	}
 
 	averageDeliveryDays := float64(totalDays) / float64(delivered)
@@ -75,6 +88,9 @@ func performaceByRegion(cleanData []model.CleanedShipment, region string) (int, 
 		days := int(data.ActualDeliveryDate.Sub(data.ShipmentDate).Hours() / 24)
 		totalDays += days
 
+	}
+	if delivered == 0 {
+		return 0, 0, 0
 	}
 
 	averageDeliveryDays := float64(totalDays) / float64(delivered)
@@ -104,9 +120,35 @@ func deliveryRegion(cleanData []model.CleanedShipment) ([]model.RegionPerformanc
 
 		sliceRegions = append(sliceRegions, sliceRegion)
 	}
+
 	overall.OverAllShipments = totalShipment
 	overall.OverAllOnTimePercentage = totalOntime / float64(len(model.ValidRegion))
 	overall.OverAllAverageDeliveryDays = totalAverageDays / float64(len(model.ValidRegion))
 
 	return sliceRegions, overall
+}
+
+func dataQuality(errors []model.ShipmentErrorReport) (int, int, int, int, int) {
+
+	var id, region, date, status, carrier int
+
+	for _, err := range errors {
+		for _, er := range err.Errors {
+			switch er.Column {
+			case "ShipmentID":
+				id++
+			case "Origin Region", "Destination Region":
+				region++
+			case "Shipment Date", "Expected Delivery Date", "Actual Delivery Date":
+				date++
+			case "Shipment Status":
+				status++
+			case "Carrier":
+				carrier++
+			}
+		}
+	}
+
+	return id, region, date, status, carrier
+
 }

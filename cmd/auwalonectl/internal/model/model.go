@@ -50,6 +50,7 @@ type ValidationError struct {
 	Value   string
 	Message string
 }
+
 type ShipmentErrorReport struct {
 	RawShipment RawShipment
 	Errors      []ValidationError
@@ -97,9 +98,9 @@ type RegionPerformance struct {
 }
 
 type DataQuality struct {
-	MissingShipmentIDs   int `json:"missingShipmentIds"`
-	InvalidDates         int `json:"invalidDates"`
-	MissingRegions       int `json:"missingRegions"`
-	InvalidDeliveryTimes int `json:"invalidDeliveryTimes"`
-	DuplicateShipmentIDs int `json:"duplicateShipmentIds"`
+	InvalidShipmentIDs int `json:"invalidShipmentIds"`
+	InvalidDates       int `json:"invalidDates"`
+	InvalidRegions     int `json:"invalidRegions"`
+	InvalidStatus      int `json:"invalidstatus"`
+	InvalidCarriers    int `json:"invalidcarriers"`
 }

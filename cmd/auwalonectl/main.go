@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	file := "shipments_2000.csv"
+	file := "shipmenttest.csv"
 
 	rawData, _ := parser.ParseShipments(file)
 

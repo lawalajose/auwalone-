@@ -1,138 +1,57 @@
 {
-  "generatedAt": "2026-08-20T19:04:24Z",
-  "inputFile": "shipments_2000.csv",
-  "totalRows": 2000,
-  "validShipments": 1996,
-  "invalidRows": 4,
-  "validationRate": 99.8,
-  "onTimeShipments": 670,
-  "lateShipments": 737,
-  "onTimePercentage": 47.61904761904761,
-  "averageDeliveryDays": 6.157782515991471,
+  "generatedAt": "2026-08-22T14:49:20Z",
+  "inputFile": "shipmenttest.csv",
+  "totalRows": 1,
+  "validShipments": 1,
+  "invalidRows": 0,
+  "validationRate": 100,
+  "onTimeShipments": 1,
+  "lateShipments": 0,
+  "onTimePercentage": 100,
+  "averageDeliveryDays": 6,
   "regions": [
     {
+      "region": "South",
+      "shipments": 0,
+      "onTimePercentage": 0,
+      "averageDeliveryDays": 0
+    },
+    {
       "region": "Central",
-      "shipments": 299,
-      "onTimePercentage": 44.14715719063545,
-      "averageDeliveryDays": 6.207357859531773
+      "shipments": 1,
+      "onTimePercentage": 100,
+      "averageDeliveryDays": 6
     },
     {
       "region": "North",
-      "shipments": 282,
-      "onTimePercentage": 46.808510638297875,
-      "averageDeliveryDays": 6.25177304964539
+      "shipments": 0,
+      "onTimePercentage": 0,
+      "averageDeliveryDays": 0
     },
     {
       "region": "East",
-      "shipments": 286,
-      "onTimePercentage": 49.65034965034965,
-      "averageDeliveryDays": 6.153846153846154
+      "shipments": 0,
+      "onTimePercentage": 0,
+      "averageDeliveryDays": 0
     },
     {
       "region": "West",
-      "shipments": 282,
-      "onTimePercentage": 43.61702127659575,
-      "averageDeliveryDays": 6.429078014184397
-    },
-    {
-      "region": "South",
-      "shipments": 258,
-      "onTimePercentage": 54.65116279069767,
-      "averageDeliveryDays": 5.705426356589148
+      "shipments": 0,
+      "onTimePercentage": 0,
+      "averageDeliveryDays": 0
     }
   ],
   "overall": {
-    "shipments": 1407,
-    "onTimePercentage": 47.77484030931528,
-    "averageDeliveryDays": 6.149496286759372
+    "shipments": 1,
+    "onTimePercentage": 20,
+    "averageDeliveryDays": 1.2
   },
   "dataQuality": {
-    "missingShipmentIds": 0,
+    "invalidShipmentIds": 0,
     "invalidDates": 0,
-    "missingRegions": 0,
-    "invalidDeliveryTimes": 0,
-    "duplicateShipmentIds": 0
+    "invalidRegions": 0,
+    "invalidstatus": 0,
+    "invalidcarriers": 0
   },
-  "ShipmentError": [
-    {
-      "RawShipment": {
-        "ShipmentID": "",
-        "OriginRegion": "West",
-        "DestinationRegion": "South",
-        "ShipmentDate": "2026-03-26",
-        "ExpectedDeliveryDate": "2026-04-01",
-        "ActualDeliveryDate": "2026-04-03",
-        "ShipmentStatus": "Delivered",
-        "Carrier": "UPS"
-      },
-      "Errors": [
-        {
-          "Row": 50,
-          "Column": "ShipmentID",
-          "Value": "",
-          "Message": "Invalid shipment ID"
-        }
-      ]
-    },
-    {
-      "RawShipment": {
-        "ShipmentID": "SHP00150",
-        "OriginRegion": "Central",
-        "DestinationRegion": "West",
-        "ShipmentDate": "invalid-date",
-        "ExpectedDeliveryDate": "2026-01-10",
-        "ActualDeliveryDate": "2026-01-12",
-        "ShipmentStatus": "Delivered",
-        "Carrier": "FedEx"
-      },
-      "Errors": [
-        {
-          "Row": 150,
-          "Column": "Shipment Date",
-          "Value": "invalid-date",
-          "Message": "Invalid Date Format, expected YYYY-MM-DD format"
-        }
-      ]
-    },
-    {
-      "RawShipment": {
-        "ShipmentID": "SHP00200",
-        "OriginRegion": "West",
-        "DestinationRegion": "Central",
-        "ShipmentDate": "2026-01-08",
-        "ExpectedDeliveryDate": "2026-01-15",
-        "ActualDeliveryDate": "2026-01-13",
-        "ShipmentStatus": "Completed",
-        "Carrier": "FedEx"
-      },
-      "Errors": [
-        {
-          "Row": 200,
-          "Column": "Shipment Status",
-          "Value": "Completed",
-          "Message": "Invalid Shipment Staus, expected (Delivered, In Transit, Delayed, Cancelled)"
-        }
-      ]
-    },
-    {
-      "RawShipment": {
-        "ShipmentID": "SHP00250",
-        "OriginRegion": "",
-        "DestinationRegion": "East",
-        "ShipmentDate": "2026-03-26",
-        "ExpectedDeliveryDate": "2026-03-30",
-        "ActualDeliveryDate": "",
-        "ShipmentStatus": "Delayed",
-        "Carrier": "DHL"
-      },
-      "Errors": [
-        {
-          "Row": 250,
-          "Column": "Origin Region",
-          "Value": "",
-          "Message": "Invalid Origin Region, Expected (East, West, South, Central, North)"
-        }
-      ]
-    }
-  ]
+  "ShipmentError": null
 }
